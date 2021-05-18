@@ -1,0 +1,31 @@
+{
+  "name": "backdoorthen",
+  "version": "1.0.0",
+  "description": "Actually run a given promise or mock its outcome based on a given input value",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "files": ["index.js"],
+  "scripts": {
+    "test": "jest",
+    "checkPackList": "npx npm-packlist"
+  },
+  "keywords": [
+    "backdoor",
+    "promise",
+    "promises",
+    "mock",
+    "mocks",
+    "fake",
+    "fakes",
+    "response",
+    "result"
+  ],
+  "author": "johanfive",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.26.0",
+    "jest": "^26.6.3"
+  }
+}

@@ -1,0 +1,40 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "globals": {
+        "Promise": "readonly"
+    },
+    "rules": {
+        "no-trailing-spaces": "error",
+        "space-before-blocks": "error",
+        "keyword-spacing": "error",
+        "no-whitespace-before-property": "error",
+        "space-before-function-paren": ["error", "never"],
+        "space-in-parens": "error",
+        "space-infix-ops": "error",
+        "space-unary-ops": "error",
+        "spaced-comment": "error",
+        "no-tabs": "error",
+        "indent": ["error", 2],
+        "array-bracket-newline": ["error", "consistent"],
+        "block-spacing": "error",
+        "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+        "camelcase": "error",
+        "comma-dangle": "error",
+        "comma-spacing": "error",
+        "comma-style": "error"
+    },
+    "overrides": [
+        {
+            "files":["**/*.test.js", "demo.js"],
+            "env": { "es6": true, "jest": true },
+            "rules": {
+                "arrow-spacing": "error"
+            }
+        }
+    ]
+}
