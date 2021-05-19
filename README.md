@@ -1,6 +1,6 @@
 # Backdoor
 
-Backdoor enables your code to either execute a promise, or bypass it entirely and return mocked data based on a given input value.
+Backdoor lets your code bypass a promise and return mocked data, or actually call that promise, depending on the value of an input variable.
 
 ## Example
 Say you're working on this piece of code, and you've already refined your `createUser` promise to perfection.
@@ -13,18 +13,21 @@ createUser(formData)
   .then(doMoreAsyncThings)
   .catch(handleError);
 ```
-Now your focus is on `doMoreAsyncThings`, you know you're going to have to run that one a few times before you get it right, and you don't want to actually create a new user every time.
-Still, you've got a demo scheduled with your PM tomorrow, and you want to be able to show that `createUser` actually works.
+Now your focus is on `doMoreAsyncThings`.
+
+You know you'll have to run that one a few times before getting it right, and you don't want to actually create a new user every time you do.
+
+Still, you have a demo scheduled with your PM tomorrow, and you want to be able to show that `createUser` actually works.
 
 While switching back and forth between different feature branches is an option, it's kinda nice if you can avoid it.
 
-`Backdoor` allows you to easily say: "If the firstName is 'Bob', don't actually create a Bob user and just return a hardcoded `{ username: bobLoblaw }` object. Anything else, actually do create a user".
+`Backdoor` allows you to easily say: "If the firstName is 'Bob', don't actually create a Bob user and just return a hardcoded `{ username: bobLoblaw }` object. Anything else, actually do create a user with the input data".
 
 Here's how it'd look like:
 ```js
 const params = {
   actualPromise: () => createUser(formData),
-  input: firstName,
+  input: formData.firstName,
   resolvedRes: { userName: 'bobLoblaw' },
   rejectedRes: { error: 'kaboom' }
 };
@@ -71,7 +74,7 @@ If you'd rather type `backdoor+fast` instead of `backdoor-fast` to make the fake
 const config = { separator: '+' };
 backdoor(params, config).then(...);
 ```
-And finally, if your use case does not rely on strings or if you'd rather implement you're own logic, you can define an `assessor` function that must have the following signature:
+And finally, if your use-case does not rely on strings or if you'd rather implement your own logic, you can define an `assessor` function that must have the following signature:
 ```js
 const assess = input => ({
   isBackdoor: boolean,
@@ -89,13 +92,13 @@ backdoor(params).then(...);
 ```
 
 `isBackdoor`:
-+ **true**: skip the actual promise and return mocked data
-+ **false**: return the actual promise and skip the mocked data
++ **true**:  skip the actual promise and return mocked data
++ **false**: return the actual promise
 
 `doResolve`:
-+ **true**: return a mocked response/result
-+ **false**: return a mocked error
++ **true**:  the fake promise will resolve with the mocked response/result
++ **false**: the fake promise will reject with the mocked error
 
 `isFast`: wait x ms before fulfilling the promise
-+ **true**: wait 5000ms by default
-+ **false**: wait 1000ms by default
++ **true**:  wait 5000ms by default (override with config.fast)
++ **false**: wait 1000ms by default (override with config.slow)
