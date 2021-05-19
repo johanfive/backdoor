@@ -1,12 +1,14 @@
 {
   "name": "backdoorthen",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Actually run a given promise or mock its outcome based on a given input value",
   "main": "index.js",
   "directories": {
     "test": "tests"
   },
-  "files": ["index.js"],
+  "files": [
+    "index.js"
+  ],
   "scripts": {
     "test": "jest",
     "checkPackList": "npx npm-packlist"
