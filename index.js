@@ -8,23 +8,29 @@ function backdoor(params) {
   var fast = 1000;
   var slow = 5000;
   var separator = '-';
+  var enabledInProd = false;
   var assess = assessor;
   if (params.config) {
     if (params.config.fast) { fast = params.config.fast; }
     if (params.config.slow) { slow = params.config.slow; }
     if (params.config.separator) { separator = params.config.separator; }
     if (params.config.assessor) { assess = params.config.assessor; }
+    if (params.config.enabledInProd === true) { enabledInProd = true; }
   }
-  var decision = assess(params.input, separator);
-  if (process.env.NODE_ENV !== 'production' && decision.isBackdoor) {
-    var delay = decision.isFast ? fast : slow;
-    return function() {
-      return new Promise(function(resolve, reject) {
-        return setTimeout(function() {
-          return decision.doResolve ? resolve(params.resolvedValue) : reject(params.rejectedValue);
-        }, delay);
-      });
-    };
+  if (process.env.NODE_ENV !== 'production' || enabledInProd) {
+    var decision = assess(params.input, separator);
+    if (decision.isBackdoor) {
+      var delay = decision.isFast ? fast : slow;
+      return function() {
+        return new Promise(function(resolve, reject) {
+          return setTimeout(function() {
+            return decision.doResolve
+              ? resolve(params.resolvedValue)
+              : reject(params.rejectedValue);
+          }, delay);
+        });
+      };
+    }
   }
   return params.actualThenable;
 }

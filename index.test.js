@@ -28,6 +28,17 @@ describe('backdoor', () => {
         expect(params.actualThenable).toHaveBeenCalled();
       });
     });
+    // This test ensures that not just "any" truthy value enables in production
+    // It's just one more layer of validation of intent
+    test('when NODE_ENV is "production" and enabledInProd is not set with the boolean true', () => {
+      process.env.NODE_ENV = 'production';
+      params.config.enabledInProd = 'true';
+      const backdoored = backdoor(params);
+      return backdoored().then((res) => {
+        expect(res).toEqual(actualPromRes);
+        expect(params.actualThenable).toHaveBeenCalled();
+      });
+    });
     test('when input does not start with "backdoor"', () => {
       params.input = 'fast-backdoor';
       const backdoored = backdoor(params);
@@ -39,6 +50,15 @@ describe('backdoor', () => {
   });
   describe('resolves', () => {
     test('slow when input is "backdoor"', () => {
+      const backdoored = backdoor(params);
+      return backdoored().then((res) => {
+        expect(res).toBe(params.resolvedValue);
+        expect(params.actualThenable).not.toHaveBeenCalled();
+      });
+    });
+    test('slow on "backdoor" when in prod only if enabledInProd is true', () => {
+      process.env.NODE_ENV = 'production';
+      params.config.enabledInProd = true;
       const backdoored = backdoor(params);
       return backdoored().then((res) => {
         expect(res).toBe(params.resolvedValue);
