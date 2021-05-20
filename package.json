@@ -1,6 +1,6 @@
 {
   "name": "backdoorthen",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Actually run a given promise or mock its outcome based on a given input value",
   "main": "index.js",
   "directories": {
