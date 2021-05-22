@@ -30,7 +30,7 @@
     },
     "overrides": [
         {
-            "files":["**/*.test.js", "demo.js"],
+            "files":["**/*.test.js", "demo.js", "runkitExample.js"],
             "env": { "es6": true, "jest": true },
             "rules": {
                 "arrow-spacing": "error"

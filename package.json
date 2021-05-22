@@ -31,5 +31,6 @@
     "jest": "^26.6.3"
   },
   "homepage": "https://github.com/johanfive/backdoor#readme",
-  "repository": "github:johanfive/backdoor"
+  "repository": "github:johanfive/backdoor",
+  "runkitExampleFilename": "runkitExample.js"
 }
