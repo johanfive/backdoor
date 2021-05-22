@@ -1,4 +1,4 @@
-# Backdoor 🚪
+# Backdoor 🚪 [![Try backdoorthen on RunKit](https://badge.runkitcdn.com/backdoorthen.svg)](https://npm.runkit.com/backdoorthen)
 
 Promises to make working with `Promises` great again 😱
 ...by dynamically choosing whether a function that returns a promise should actually be called,
