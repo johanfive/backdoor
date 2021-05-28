@@ -25,8 +25,9 @@ const withBackdoor = thenable => backdoor({
   config: { enabledInProd: true } // Because runKit sets NODE_ENV to "production" by default
 });
 
-// Fill out the firstName input field with 'Peter' and submit the form
-createUser(formData)
+// Submit the form:
+// Same as running createUser(formData) directly, because the firstName input field isn't 'backdoor'
+withBackdoor(createUser)(formData)
   .then(apiResponseHandler); // pparker (no perceptible delay with this example)
 
 // Fill out the firstName input field with 'backdoor' and submit the form
