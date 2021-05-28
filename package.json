@@ -1,6 +1,6 @@
 {
   "name": "backdoorthen",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Either call a given thenable or bypass it and return mocked data instead",
   "main": "index.js",
   "files": [
