@@ -122,7 +122,7 @@ describe('backdoor', () => {
         expect(params.actualThenable).not.toHaveBeenCalled();
       });
     });
-    test('rejects when the assessor returns "isBackdoor" as true', () => {
+    test('rejects when the assessor returns only "isBackdoor" as true', () => {
       params.input = 5;
       params.config.assessor = input => ({ isBackdoor: input > 1 });
       const backdoored = backdoor(params);
@@ -133,12 +133,77 @@ describe('backdoor', () => {
     });
   });
   // Keep this test at the bottom. "jest.useFakeTimers();" has scoping issues with describe and test
-  test('works without config', () => {
+  test('works without config (slow 5s)', () => {
     jest.useFakeTimers();
+    params.config = null;
     const backdoored = backdoor(params)
     const pendingPromise = backdoored().then(res => {
       expect(res).toBe(params.resolvedValue);
       expect(params.actualThenable).not.toHaveBeenCalled();
+      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 5000);
+    });
+    jest.runAllTimers();
+    return pendingPromise;
+  });
+  test('works without config (fast 1s)', () => {
+    jest.useFakeTimers();
+    params.config = null;
+    params.input = 'backdoor-fast';
+    const backdoored = backdoor(params)
+    const pendingPromise = backdoored().then(res => {
+      expect(res).toBe(params.resolvedValue);
+      expect(params.actualThenable).not.toHaveBeenCalled();
+      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000);
+    });
+    jest.runAllTimers();
+    return pendingPromise;
+  });
+  test('defaults to slow === 5000 when config exists without "slow" override', () => {
+    jest.useFakeTimers();
+    params.config = {};
+    const backdoored = backdoor(params)
+    const pendingPromise = backdoored().then(res => {
+      expect(res).toBe(params.resolvedValue);
+      expect(params.actualThenable).not.toHaveBeenCalled();
+      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 5000);
+    });
+    jest.runAllTimers();
+    return pendingPromise;
+  });
+  test('defaults to fast === 1000 when config exists without "fast" override', () => {
+    jest.useFakeTimers();
+    params.config = {};
+    params.input = 'backdoor-fast';
+    const backdoored = backdoor(params)
+    const pendingPromise = backdoored().then(res => {
+      expect(res).toBe(params.resolvedValue);
+      expect(params.actualThenable).not.toHaveBeenCalled();
+      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000);
+    });
+    jest.runAllTimers();
+    return pendingPromise;
+  });
+  test('accepts 0 for the "slow" override config', () => {
+    jest.useFakeTimers();
+    params.config = { slow: 0 };
+    const backdoored = backdoor(params)
+    const pendingPromise = backdoored().then(res => {
+      expect(res).toBe(params.resolvedValue);
+      expect(params.actualThenable).not.toHaveBeenCalled();
+      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 0);
+    });
+    jest.runAllTimers();
+    return pendingPromise;
+  });
+  test('accepts 0 for the "fast" override config', () => {
+    jest.useFakeTimers();
+    params.config = { fast: 0 };
+    params.input = 'backdoor-fast';
+    const backdoored = backdoor(params)
+    const pendingPromise = backdoored().then(res => {
+      expect(res).toBe(params.resolvedValue);
+      expect(params.actualThenable).not.toHaveBeenCalled();
+      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 0);
     });
     jest.runAllTimers();
     return pendingPromise;

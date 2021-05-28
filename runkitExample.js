@@ -26,8 +26,10 @@ const withBackdoor = thenable => backdoor({
 });
 
 // Fill out the firstName input field with 'Peter' and submit the form
-createUser(formData).then(apiResponseHandler); // pparker (no perceptible delay with this example)
+createUser(formData)
+  .then(apiResponseHandler); // pparker (no perceptible delay with this example)
 
 // Fill out the firstName input field with 'backdoor' and submit the form
 formData.firstName = 'backdoor';
-withBackdoor(createUser)(formData).then(apiResponseHandler); // fakeuser (5s delay perceptible)
+withBackdoor(createUser)(formData)
+  .then(apiResponseHandler); // fakeuser (5s delay perceptible)

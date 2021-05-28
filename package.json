@@ -1,16 +1,11 @@
 {
   "name": "backdoorthen",
   "version": "2.1.2",
-  "description": "Actually run a given promise or mock its outcome based on a given input value",
+  "description": "Either call a given thenable or bypass it and return mocked data instead",
   "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
-  "files": [
-    "index.js"
-  ],
+  "files": ["index.js", "runKitExample.js"],
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "checkPackList": "npx npm-packlist"
   },
   "keywords": [

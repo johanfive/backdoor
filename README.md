@@ -1,8 +1,13 @@
-# Backdoor 🚪 [![Try backdoorthen on RunKit](https://badge.runkitcdn.com/backdoorthen.svg)](https://npm.runkit.com/backdoorthen)
+[![GitHub issues](https://img.shields.io/github/issues/johanfive/backdoor)](https://github.com/johanfive/backdoor/issues)
+![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/johanfive/backdoor)
+![GitHub top language](https://img.shields.io/github/languages/top/johanfive/backdoor)
+
+[![Try backdoorthen on RunKit](https://badge.runkitcdn.com/backdoorthen.svg)](https://npm.runkit.com/backdoorthen)
+
+# Backdoor 🚪
 
 Promises to make working with `Promises` great again 😱
-...by dynamically choosing whether a function that returns a promise should actually be called,
-or bypassed in favor of returning mocked data.
+...by either calling a given thenable, or bypassing it entirely in favour of returning mocked data instead.
 
 It's especially convenient for working on functions that are lower in the promise chain.
 
@@ -45,6 +50,7 @@ createUserWithBackdoor()
 ## Installation
 ```sh
 npm i -D backdoorthen
+# yes, the name "backdoor" was already taken...
 ```
 ## Usage
 ```js
@@ -67,6 +73,7 @@ ___________________________________________
 ## Override logic
 `backdoor`'s params object accepts an object on its `config` key.
 
+### Delay
 You can control the `delay` it takes the promise to return the mocked data via the `config.fast` and the `config.slow` properties:
 ```js
 const backdooredProm = backdoor({
@@ -78,6 +85,8 @@ const backdooredProm = backdoor({
 });
 backdooredProm().then(...);
 ```
+
+### Separator
 If you'd rather type `backdoor+fast` instead of `backdoor-fast` to make the fake promise resolve quickly, you can define the `separator` character like so:
 ```js
 const backdooredProm = backdoor({
@@ -86,6 +95,8 @@ const backdooredProm = backdoor({
 });
 backdooredProm().then(...);
 ```
+
+### Assessor
 And finally, if your use-case does not rely on strings or if you'd rather implement your own logic, you can define an `assessor` function that must have the following signature:
 ```js
 const assessor = input => ({

@@ -11,8 +11,8 @@ function backdoor(params) {
   var enabledInProd = false;
   var assess = assessor;
   if (params.config) {
-    if (params.config.fast) { fast = params.config.fast; }
-    if (params.config.slow) { slow = params.config.slow; }
+    if (params.config.fast || params.config.fast === 0) { fast = params.config.fast; }
+    if (params.config.slow || params.config.slow === 0) { slow = params.config.slow; }
     if (params.config.separator) { separator = params.config.separator; }
     if (params.config.assessor) { assess = params.config.assessor; }
     if (params.config.enabledInProd === true) { enabledInProd = true; }
