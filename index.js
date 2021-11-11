@@ -1,8 +1,18 @@
 /**
  * Assess the value of an input variable to determine whether
  * a given thenable should be called or bypassed in favor of returning mocked data instead
- * @param {Object} params The object providing the mocked data, the input to evaluate and a thenable
- * @returns A function that returns promise
+ * @param {Object} params
+ * @param {Function} params.actualThenable The thenable that should be either called or bypassed
+ * @param {*} params.input The value the outcome depends upon (String expected by default assessor)
+ * @param {*} params.resolvedValue The data the mocked promise should resolve with
+ * @param {*} params.rejectedValue The data the mocked promise should reject with
+ * @param {Object} params.config Default behaviour overrides
+ * @param {Number} params.config.fast The short delay before the mocked promise settles
+ * @param {Number} params.config.slow The long delay before the mocked promise settles
+ * @param {String} params.config.separator The character separating each keyword backdoor looks for
+ * @param {Function} params.config.assessor Mean to override backdoor's logic entirely
+ * @param {Boolean} params.config.enabledInProd False by default, non-boolean values equate to false
+ * @returns A function that returns a promise
  */
 function backdoor(params) {
   var fast = 1000;
