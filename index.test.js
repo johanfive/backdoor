@@ -134,7 +134,7 @@ describe('backdoor', () => {
   });
   // Keep this test at the bottom. "jest.useFakeTimers();" has scoping issues with describe and test
   test('works without config (slow 5s)', () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
     params.config = null;
     const backdoored = backdoor(params)
     const pendingPromise = backdoored().then(res => {
@@ -146,7 +146,7 @@ describe('backdoor', () => {
     return pendingPromise;
   });
   test('works without config (fast 1s)', () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
     params.config = null;
     params.input = 'backdoor-fast';
     const backdoored = backdoor(params)
@@ -159,7 +159,7 @@ describe('backdoor', () => {
     return pendingPromise;
   });
   test('defaults to slow === 5000 when config exists without "slow" override', () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
     params.config = {};
     const backdoored = backdoor(params)
     const pendingPromise = backdoored().then(res => {
@@ -171,7 +171,7 @@ describe('backdoor', () => {
     return pendingPromise;
   });
   test('defaults to fast === 1000 when config exists without "fast" override', () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
     params.config = {};
     params.input = 'backdoor-fast';
     const backdoored = backdoor(params)
@@ -184,7 +184,7 @@ describe('backdoor', () => {
     return pendingPromise;
   });
   test('accepts 0 for the "slow" override config', () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
     params.config = { slow: 0 };
     const backdoored = backdoor(params)
     const pendingPromise = backdoored().then(res => {
@@ -196,7 +196,7 @@ describe('backdoor', () => {
     return pendingPromise;
   });
   test('accepts 0 for the "fast" override config', () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
     params.config = { fast: 0 };
     params.input = 'backdoor-fast';
     const backdoored = backdoor(params)
