@@ -15,12 +15,10 @@
     "backdoor",
     "promise",
     "promises",
-    "mock",
+    "mocked data",
     "mocks",
-    "fake",
-    "fakes",
-    "response",
-    "result"
+    "cheat codes",
+    "fake response"
   ],
   "author": "johanfive",
   "license": "ISC",
