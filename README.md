@@ -12,10 +12,10 @@ Implement `cheat codes` in your apps.
 
 With 1 input, control a `promise`'s *pending time*, whether it *resolves* or *rejects*, and the data it returns.
 
+It's especially convenient for working on functions that are lower in the promise chain.
+
 Implementing this yourself on the fly is not hard work, but it can get messy and time consuming.
 `Backdoor` offers a plug-and-play approach that preserves the readability of your code.
-
-It's especially convenient for working on functions that are lower in the promise chain.
 
 #### Example:
 You're working on a function called "doMoreAsyncThings" which relies on the output of a "createUser" call:
@@ -26,14 +26,15 @@ createUser(formData)
   .then(doMoreAsyncThings)
   .catch(handleError);
 ```
-You don't want the http request to your "/user" endpoint to actually occur every single time you test your changes.
+You don't want *createUser* to make an http request to the */user* endpoint every single time you test the changes you make to *doMoreAsyncThings*.
 
 At the same time, it'd be nice if you could maintain your ability to do so without having to update the code yet again...
 
-Add a `backdoor` to "createUser" (without changing "createUser" itself):
+This is possible by simply adding a `backdoor` to "createUser" (without changing "createUser" itself):
 ```js
 const backdoor = require('backdoorthen');
 
+// unchanged
 const createUser = (formData) => axios.post('/user', formData);
 
 const withBackdoor = backdoor({
@@ -65,7 +66,7 @@ withBackdoor(createUser)(formData)
   .then(doMoreAsyncThings)
   .catch(handleError);
 ```
-is *so close* to what your code would look like if you hadn't backdoored your promise, it makes it very easy to remove `backdoor` once you're ready for your final commit:
+is *so close* to what your code would look like if you hadn't backdoored your promise. This makes it very easy to remove `backdoor` once you're ready for your final commit:
 ```js
 createUser(formData)
   .then(doMoreAsyncThings)
