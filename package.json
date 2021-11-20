@@ -1,15 +1,12 @@
 {
   "name": "backdoorthen",
-  "version": "2.2.2",
-  "description": "Either call a given thenable or bypass it and return mocked data instead",
+  "version": "2.2.3",
+  "description": "Cheat codes for promises",
   "main": "index.js",
-  "files": [
-    "index.js",
-    "runKitExample.js"
-  ],
+  "files": ["index.js"],
   "scripts": {
     "test": "jest --coverage",
-    "checkPackList": "npx npm-packlist"
+    "checkPackList": "npm pack --dry-run"
   },
   "keywords": [
     "backdoor",
@@ -27,6 +24,5 @@
     "jest": "^27.3.1"
   },
   "homepage": "https://github.com/johanfive/backdoor#readme",
-  "repository": "github:johanfive/backdoor",
-  "runkitExampleFilename": "runkitExample.js"
+  "repository": "github:johanfive/backdoor"
 }
